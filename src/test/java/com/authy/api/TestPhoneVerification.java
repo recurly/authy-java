@@ -67,6 +67,8 @@ public class TestPhoneVerification {
 
         Verification result = client.start("282-23", "1", "sms", params);
         Assert.assertEquals("Phone number is invalid", result.getMessage());
+        Assert.assertEquals(400, result.getStatus());
+        Assert.assertEquals("60033", result.getErrorCode());
         Assert.assertEquals("false", result.getSuccess());
     }
 

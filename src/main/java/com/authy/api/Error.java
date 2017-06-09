@@ -15,7 +15,16 @@ import java.util.Map;
  */
 @XmlRootElement(name = "errors")
 public class Error implements Formattable {
-    private String message, url, countryCode;
+    private String errorCode, message, url, countryCode;
+
+	@XmlElement(name="error-code")
+	public String getErrorCode() {
+		return errorCode;
+	}
+
+	public void setErrorCode(String errorCode) {
+		this.errorCode = errorCode;
+	}
 
     @XmlElement(name = "country-code")
     public String getCountryCode() {
@@ -73,6 +82,7 @@ public class Error implements Formattable {
     public Map<String, String> toMap() {
         Map<String, String> map = new HashMap<>();
 
+        map.put("error-code", errorCode);
         map.put("message", message);
         map.put("country-code", countryCode);
         map.put("url", url);
@@ -88,8 +98,8 @@ public class Error implements Formattable {
 
     @Override
     public String toString() {
-        return "Error [message=" + message + ", url=" + url + ", countryCode="
-                + countryCode + "]";
+        return "Error [errorCode=" + errorCode + ", message=" + message
+                + ", url=" + url + ", countryCode=" + countryCode + "]";
     }
 
 }
