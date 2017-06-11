@@ -31,7 +31,7 @@ public class TestPhoneInfo {
         PhoneInfoResponse result = client.info("7754615609", "1");
 
         Assert.assertEquals(true, result.getMessage().contains("Phone number information as of"));
-        Assert.assertEquals("Pinger", result.getProvider());
+        Assert.assertTrue(result.getProvider().contains("Pinger"));
         Assert.assertEquals("voip", result.getType());
         Assert.assertEquals("false", result.getIsPorted());
         Assert.assertEquals("true", result.getSuccess());

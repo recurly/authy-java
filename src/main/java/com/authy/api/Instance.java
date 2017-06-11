@@ -81,5 +81,9 @@ public class Instance {
     public void setStatus(int status) {
         this.status = status;
     }
+
+    public String getMessage() {
+        return this.message;
+    }
 }
 

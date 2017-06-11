@@ -17,6 +17,7 @@ import java.util.Map;
 public class Verification implements Formattable {
     private int status = 503;
     private String response;
+    private String errorCode = "";
     private String message = "Something went wrong!";
     private boolean isPorted = false;
     private boolean isCellphone = false;
@@ -24,15 +25,21 @@ public class Verification implements Formattable {
     public Verification() {
     }
 
-    public Verification(int status, String response, String message) {
+    public Verification(int status, String response, String errorCode, String message) {
         this.status = status;
         this.response = response;
+        this.errorCode = errorCode;
         this.message = message;
     }
 
     @XmlElement(name = "message")
     public String getMessage() {
         return message;
+    }
+
+    @XmlElement(name = "error-code")
+    public String getErrorCode() {
+        return errorCode;
     }
 
     @XmlElement(name = "success")
@@ -48,6 +55,10 @@ public class Verification implements Formattable {
     @XmlElement(name = "is_cellphone")
     public String getIsCellphone() {
         return Boolean.toString(this.isCellphone);
+    }
+
+    public int getStatus() {
+        return this.status;
     }
 
     public void setStatus(int status) {
@@ -93,6 +104,7 @@ public class Verification implements Formattable {
     public Map<String, String> toMap() {
         Map<String, String> map = new HashMap<>();
 
+        map.put("error_code", this.getErrorCode());
         map.put("message", this.getMessage());
         map.put("success", this.getSuccess());
         map.put("is_ported", this.getIsPorted());
@@ -104,6 +116,7 @@ public class Verification implements Formattable {
     public String toJSON() {
         JSONObject verification = new JSONObject();
 
+        verification.put("error_code", this.getErrorCode());
         verification.put("message", this.getMessage());
         verification.put("success", this.getSuccess());
         verification.put("is_ported", this.getIsPorted());
@@ -113,6 +126,9 @@ public class Verification implements Formattable {
     }
 
     private void parseResponseToOjbect(JSONObject json) {
+        if( !json.isNull("error_code") )
+            this.errorCode = json.getString("error_code");
+
         if (!json.isNull("message"))
             this.message = json.getString("message");
 
